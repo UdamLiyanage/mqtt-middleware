@@ -18,7 +18,7 @@ func main() {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 
 	opts := setClientOptions()
-	topic := "/test-topic"
+	topic := "#"
 
 	opts.OnConnect = func(c MQTT.Client) {
 		if token := c.Subscribe(topic, 0, OnMessageReceived); token.Wait() && token.Error() != nil {

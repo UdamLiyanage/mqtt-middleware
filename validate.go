@@ -12,9 +12,7 @@ import (
 func validateRequest(message []byte) bool {
 	var msg map[string]string
 	err := json.Unmarshal(message, &msg)
-	if err != nil {
-		panic(err)
-	}
+	checkError(err)
 	if !validateSerial(msg["serial"]) {
 		fmt.Println("Unidentified Device!")
 		return false
@@ -29,11 +27,9 @@ func validateSerial(serial string) bool {
 		"serial": serial,
 	}
 	response, err := database.Query(context.TODO(), "FOR d IN devices FILTER d.serial==@serial RETURN d", bindVars)
-	if err != nil {
-		panic(err)
-	}
+	checkError(err)
 	_, err = response.ReadDocument(context.TODO(), &res)
-	if err != nil || driver.IsNoMoreDocuments(err) {
+	if checkError(err) || driver.IsNoMoreDocuments(err) {
 		return false
 	}
 	return true

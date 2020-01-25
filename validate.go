@@ -22,9 +22,11 @@ func validateRequest(message []byte) {
 }
 
 func validateSerial(serial string) bool {
-	var doc map[string]interface{}
 	var res map[string]string
-	response, err := database.Query(context.TODO(), "FOR d IN devices FILTER d.serial=='"+serial+"' RETURN d", doc)
+	bindVars := map[string]interface{}{
+		"serial": serial,
+	}
+	response, err := database.Query(context.TODO(), "FOR d IN devices FILTER d.serial==@serial RETURN d", bindVars)
 	if err != nil {
 		panic(err)
 	}

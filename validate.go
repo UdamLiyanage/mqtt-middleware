@@ -11,7 +11,6 @@ import (
 
 func validateRequest(message []byte) bool {
 	var msg map[string]string
-	fmt.Println("Validate Request")
 	err := json.Unmarshal(message, &msg)
 	if err != nil {
 		panic(err)

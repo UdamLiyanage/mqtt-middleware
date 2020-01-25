@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/arangodb/go-driver"
 	"os"
 	"os/signal"
 	"syscall"
@@ -9,11 +10,18 @@ import (
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 )
 
+var database driver.Database
+
+func init() {
+	databaseConnect()
+}
+
 func OnMessageReceived(_ MQTT.Client, message MQTT.Message) {
 	fmt.Printf("Received message on topic: %s\nMessage: %s\n", message.Topic(), message.Payload())
 }
 
 func main() {
+	validateRequest()
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/arangodb/go-driver"
 )
 
 func validateRequest(message []byte) {
@@ -28,7 +29,7 @@ func validateSerial(serial string) bool {
 		panic(err)
 	}
 	_, err = response.ReadDocument(context.TODO(), &res)
-	if err != nil {
+	if err != nil || driver.IsNoMoreDocuments(err) {
 		return false
 	}
 	return true

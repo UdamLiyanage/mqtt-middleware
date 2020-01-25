@@ -22,7 +22,6 @@ func OnMessageReceived(_ MQTT.Client, message MQTT.Message) {
 }
 
 func main() {
-	validateRequest()
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 

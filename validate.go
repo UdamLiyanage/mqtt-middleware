@@ -13,15 +13,23 @@ func validateRequest(message []byte) {
 	if err != nil {
 		panic(err)
 	}
+	if !validateSerial(msg["serial"]) {
+		fmt.Println("Unidentified Device!")
+		return
+	}
+	println("Device Identified! ")
+}
+
+func validateSerial(serial string) bool {
 	var doc map[string]interface{}
 	var res map[string]string
-	response, err := database.Query(context.TODO(), "FOR d IN devices FILTER d.serial=='"+msg["serial"]+"' RETURN d", doc)
+	response, err := database.Query(context.TODO(), "FOR d IN devices FILTER d.serial=='"+serial+"' RETURN d", doc)
 	if err != nil {
 		panic(err)
 	}
 	_, err = response.ReadDocument(context.TODO(), &res)
 	if err != nil {
-		println("Unidentified Device")
+		return false
 	}
-	println("Device Identified! ", res["name"])
+	return true
 }

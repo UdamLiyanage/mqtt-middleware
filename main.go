@@ -18,6 +18,7 @@ func init() {
 
 func OnMessageReceived(_ MQTT.Client, message MQTT.Message) {
 	fmt.Printf("Received message on topic: %s\nMessage: %s\n", message.Topic(), message.Payload())
+	validateRequest(message.Payload())
 }
 
 func main() {

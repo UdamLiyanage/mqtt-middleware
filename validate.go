@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func validateRequest() {
+func validateRequest(message []byte) {
 	fmt.Println("Validate Request")
 	var doc map[string]interface{}
 	var res map[string]string

@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/arangodb/go-driver"
+	"net/http"
 )
 
 func validateRequest(message []byte) {
@@ -18,7 +20,8 @@ func validateRequest(message []byte) {
 		fmt.Println("Unidentified Device!")
 		return
 	}
-	println("Device Identified! ")
+	_, _ = http.Post("localhost:9000", "application/json", bytes.NewBuffer(message))
+	return
 }
 
 func validateSerial(serial string) bool {

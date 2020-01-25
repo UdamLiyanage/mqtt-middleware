@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func validateRequest(message []byte) {
+func validateRequest(message []byte) bool {
 	var msg map[string]string
 	fmt.Println("Validate Request")
 	err := json.Unmarshal(message, &msg)
@@ -18,10 +18,10 @@ func validateRequest(message []byte) {
 	}
 	if !validateSerial(msg["serial"]) {
 		fmt.Println("Unidentified Device!")
-		return
+		return false
 	}
 	_, _ = http.Post("localhost:9000", "application/json", bytes.NewBuffer(message))
-	return
+	return true
 }
 
 func validateSerial(serial string) bool {

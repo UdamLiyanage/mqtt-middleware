@@ -17,7 +17,13 @@ func validateRequest(message []byte) bool {
 		fmt.Println("Unidentified Device!")
 		return false
 	}
-	_, _ = http.Post("localhost:9000", "application/json", bytes.NewBuffer(message))
+	if err != nil {
+		panic(err)
+	}
+	_, err = http.Post("http://127.0.0.1:9000/mqtt-broker", "application/json", bytes.NewBuffer(message))
+	if err != nil {
+		panic(err)
+	}
 	return true
 }
 

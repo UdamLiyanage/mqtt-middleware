@@ -8,6 +8,7 @@ import (
 	"syscall"
 
 	MQTT "github.com/eclipse/paho.mqtt.golang"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 var database driver.Database
@@ -43,7 +44,7 @@ func main() {
 }
 
 func setClientOptions() *MQTT.ClientOptions {
-	opts := MQTT.NewClientOptions().AddBroker("tcp://54.67.77.75:1883")
+	opts := MQTT.NewClientOptions().AddBroker(os.Getenv("BROKER_URL"))
 	opts.SetDefaultPublishHandler(OnMessageReceived)
 	return opts
 }

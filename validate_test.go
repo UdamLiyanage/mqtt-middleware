@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestValidateRequest(t *testing.T) {
+func testValidateRequest(t *testing.T) {
 	msg := map[string]string{
 		"serial": "test_serial",
 	}
@@ -18,7 +18,7 @@ func TestValidateRequest(t *testing.T) {
 	}
 }
 
-func TestInvalidValidateRequest(t *testing.T) {
+func testInvalidValidateRequest(t *testing.T) {
 	msg := map[string]string{
 		"serial": "test_",
 	}

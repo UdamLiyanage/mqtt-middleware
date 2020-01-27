@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/arangodb/go-driver"
 	"net/http"
+	"os"
 )
 
 func validateRequest(message []byte) bool {
@@ -20,7 +21,7 @@ func validateRequest(message []byte) bool {
 	if err != nil {
 		panic(err)
 	}
-	_, err = http.Post("http://127.0.0.1:9000/mqtt-broker", "application/json", bytes.NewBuffer(message))
+	_, err = http.Post(os.Getenv("RULE_ENGINE_URL"), "application/json", bytes.NewBuffer(message))
 	if err != nil {
 		panic(err)
 	}

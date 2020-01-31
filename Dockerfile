@@ -18,6 +18,10 @@ FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates
 
+COPY ./arangocert.crt /usr/local/share/ca-certificates/arangocert.crt
+
+RUN update-ca-certificates
+
 WORKDIR /root/
 
 # Copy the Pre-built binary file from the previous stage
